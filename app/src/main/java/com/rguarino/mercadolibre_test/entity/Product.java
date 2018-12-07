@@ -25,11 +25,11 @@ public class Product {
     private String condition;
     private String thumbnail;
     private Boolean accepts_mercadopago;
-    private Installments installments;
+    private Installment installments;
     private Address address;
     private Shipping shipping;
-    private Reviews reviews;
-    private List<Attributes> atrAttributes;
+    private Review reviews;
+    private List<Attribute> atrAttributes;
 
     public Product() {
     }
@@ -106,11 +106,11 @@ public class Product {
         this.accepts_mercadopago = accepts_mercadopago;
     }
 
-    public Installments getInstallments() {
+    public Installment getInstallments() {
         return installments;
     }
 
-    public void setInstallments(Installments installments) {
+    public void setInstallments(Installment installments) {
         this.installments = installments;
     }
 
@@ -130,19 +130,19 @@ public class Product {
         this.shipping = shipping;
     }
 
-    public Reviews getReviews() {
+    public Review getReviews() {
         return reviews;
     }
 
-    public void setReviews(Reviews reviews) {
+    public void setReviews(Review reviews) {
         this.reviews = reviews;
     }
 
-    public List<Attributes> getAtrAttributes() {
+    public List<Attribute> getAtrAttributes() {
         return atrAttributes;
     }
 
-    public void setAtrAttributes(List<Attributes> atrAttributes) {
+    public void setAtrAttributes(List<Attribute> atrAttributes) {
         this.atrAttributes = atrAttributes;
     }
 }

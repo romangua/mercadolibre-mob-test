@@ -4,13 +4,13 @@ package com.rguarino.mercadolibre_test.entity;
  * Created by dev3 on 07/12/2018.
  */
 
-public class Installments {
+public class Installment {
     private Integer quantity;
     private Float amount;
     private Float rate;
     private String currency_id;
 
-    public Installments() {
+    public Installment() {
     }
 
     public Integer getQuantity() {

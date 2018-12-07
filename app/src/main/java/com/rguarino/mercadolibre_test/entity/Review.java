@@ -4,11 +4,11 @@ package com.rguarino.mercadolibre_test.entity;
  * Created by dev3 on 07/12/2018.
  */
 
-public class Reviews {
+public class Review {
     private Float rating_average;
     private Integer total;
 
-    public Reviews() {
+    public Review() {
     }
 
     public Float getRating_average() {

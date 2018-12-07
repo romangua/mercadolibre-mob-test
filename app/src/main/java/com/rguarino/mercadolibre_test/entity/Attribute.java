@@ -4,7 +4,7 @@ package com.rguarino.mercadolibre_test.entity;
  * Created by dev3 on 07/12/2018.
  */
 
-public class Attributes {
+public class Attribute {
 
     /*
         Marca
@@ -15,7 +15,7 @@ public class Attributes {
     private String name;
     private String value_name;
 
-    public Attributes() {
+    public Attribute() {
     }
 
     public String getName() {

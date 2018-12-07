@@ -8,4 +8,9 @@
     <color name="listPrice">#333333</color>
     <color name="listShipping">#8bab68</color>
     <color name="listInstallments">#8bab68</color>
+    <color name="startFill">#fcda14</color>
+    <color name="startEmpty">#c9c9c9</color>
+    <color name="productTitle">#474747</color>
+    <color name="productPrice">#303030</color>
+    <color name="productBackground">#ededed</color>
 </resources>

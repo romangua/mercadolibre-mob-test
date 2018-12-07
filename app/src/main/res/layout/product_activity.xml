@@ -1,0 +1,92 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:background="@color/productBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:indeterminateTint="@color/progressBar"
+        android:layout_gravity="center">
+    </ProgressBar>
+
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/theme_primary" />
+
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:background="@drawable/color_cursor_white"
+            android:layout_marginTop="?attr/actionBarSize">
+        </android.support.v4.view.ViewPager>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_below="@id/pager"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/lblTitle"
+                android:layout_width="wrap_content"
+                style="@style/Base.TextAppearance.AppCompat.Large"
+                android:layout_height="wrap_content"
+                android:textColor="@color/productTitle"
+                android:text="Pc Armada Sliml Inter Amd Dual Core Gamer Minecrat Lol Hdmi"
+                android:layout_marginTop="10dp"/>
+
+            <RatingBar
+                android:id="@+id/star"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxHeight="30dp"
+                android:minHeight="30dp"
+                android:transformPivotX="0dp"
+                android:transformPivotY="0dp"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                android:layout_marginTop="15dp"
+                android:numStars="5"
+                android:rating="2"
+                android:isIndicator="true"
+                android:layout_below="@id/lblTitle"
+                android:progressTint="@color/startFill"
+            />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$ 4000"
+                android:textSize="30sp"
+                android:layout_marginTop="14dp"
+                android:textColor="@color/productPrice"
+                android:layout_below="@+id/star"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</FrameLayout>

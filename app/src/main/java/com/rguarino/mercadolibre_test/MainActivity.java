@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void searchInAPI(String text) {
-        if (text != null && !text.isEmpty() && text.length() >= 3) {
+        if (text != null && !text.isEmpty()) {
             progressBar.setVisibility(View.VISIBLE);
             Retrofit.searchItems(text)
                     .enqueue(new Retrofit() {
