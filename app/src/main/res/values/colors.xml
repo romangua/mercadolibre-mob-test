@@ -2,5 +2,10 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#3F51B5</color>
+    <color name="progressBar">#009fd9</color>
+    <color name="listTitle">#8a8a8a</color>
+    <color name="listPrice">#333333</color>
+    <color name="listShipping">#8bab68</color>
+    <color name="listInstallments">#8bab68</color>
 </resources>

@@ -1,0 +1,60 @@
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblTitle"
+        android:layout_marginLeft="20dp"
+        android:textSize="13sp"
+        android:text="MacBook Air 13"
+        android:textColor="@color/listTitle"
+        android:layout_toRightOf="@+id/image"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblPrice"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+
+        android:layout_marginLeft="20dp"
+        android:text="$10.999"
+        android:textSize="20sp"
+        android:textColor="@color/listPrice"
+        android:layout_below="@+id/lblTitle"
+        android:layout_toRightOf="@+id/image"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblInstallments"
+        android:layout_marginLeft="20dp"
+        android:textSize="12sp"
+        android:layout_below="@+id/lblPrice"
+        android:textColor="@color/listInstallments"
+        android:text="Hasta 6 cuotas sin interés"
+        android:layout_toRightOf="@+id/image"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblShipping"
+        android:layout_marginLeft="20dp"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/listShipping"
+        android:layout_below="@+id/lblInstallments"
+        android:text="Envío gratis"
+        android:layout_toRightOf="@+id/image"/>
+</RelativeLayout>
