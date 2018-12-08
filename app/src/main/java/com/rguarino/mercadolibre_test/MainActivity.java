@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.mercadolibre);
         }
 
+        Intent i = new Intent(MainActivity.this, ProductActivity.class);
+        startActivity(i);
+
         items = new ArrayList();
         layoutNoItems = findViewById(R.id.layout_no_items);
         progressBar = findViewById(R.id.progressBar);
