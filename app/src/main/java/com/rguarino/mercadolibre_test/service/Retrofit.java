@@ -52,7 +52,12 @@ public abstract class Retrofit implements Callback<ResponseBody> {
 
     public static Call<ResponseBody> getItem(String itemId) {
         init();
-        return apiInterface.getItem("items", itemId);
+        return apiInterface.getItem("items/" + itemId);
+    }
+
+    public static Call<ResponseBody> getItemDescription(String itemId) {
+        init();
+        return apiInterface.getItem("items/" + itemId + "/description");
     }
 
     public interface ApiInterface {
@@ -65,8 +70,11 @@ public abstract class Retrofit implements Callback<ResponseBody> {
 
         @GET
         Call<ResponseBody> getItem(
-                @Url String endPoint,
-                @Path("") String itemId);
+                @Url String endPoint);
+
+        @GET
+        Call<ResponseBody> getItemDescription(
+                @Url String endPoint);
     }
 
     @Override

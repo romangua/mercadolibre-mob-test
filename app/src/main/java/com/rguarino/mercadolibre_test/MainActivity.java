@@ -1,5 +1,7 @@
 package com.rguarino.mercadolibre_test;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -55,13 +57,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        if (toolbar != null){
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(R.string.mercadolibre);
-        }
-
-        //Intent i = new Intent(MainActivity.this, ProductActivity.class);
-        //startActivity(i);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.mercadolibre);
 
         layoutNoItems = findViewById(R.id.layout_no_items);
         progressBar = findViewById(R.id.progressBar);
@@ -99,10 +96,25 @@ public class MainActivity extends AppCompatActivity {
         productAdapter.setOnViewListener(new OnViewListener() {
             @Override
             public void viewOnClick(View v, int position_p) {
-                Intent i = new Intent(MainActivity.this, ProductActivity.class);
-                i.putExtra("product", items.get(position_p));
-                startActivityForResult(i, 1);
-                overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
+                Product item = items.get(position_p);
+                if (item.getBuying_mode().equals("buy_it_now")) {
+                    Intent i = new Intent(MainActivity.this, ProductActivity.class);
+                    i.putExtra("product", item);
+                    startActivityForResult(i, 1);
+                    overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
+                } else {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Atención")
+                            .setMessage("Solo se permite ver el detalle de productos del tipo 'buy_it_now', no esta permitido otros tales como 'classified'. Realiza una búsqueda del tipo Celular o Notebook")
+                            .setCancelable(false)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            }).show();
+
+                }
             }
         });
 
@@ -202,12 +214,7 @@ public class MainActivity extends AppCompatActivity {
                                 int total = jResponse.getJSONObject("paging").getInt("total");
                                 offset+= Retrofit.PRODUCT_INCREASE_PAGER;
                                 noMore = offset >= total;
-
-                                Log.e("total", ""+total);
-                                Log.e("offset", ""+offset);
-
                                 isSearching = false;
-                                //productAdapter.loadEnded();
 
                                 Type productType = new TypeToken<List<Product>>() { }.getType();
                                 List<Product> products = new Gson().fromJson(jResponse.getJSONArray("results").toString(), productType);
@@ -220,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
                                 items.addAll(products);
                                 productAdapter.notifyDataSetChanged();
                                 productAdapter.loadEnded();
-
 
                                 progressBar.setVisibility(View.GONE);
                                 if(items.size() > 0) {

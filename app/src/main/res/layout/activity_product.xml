@@ -1,0 +1,449 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:indeterminateTint="@color/progressBar"
+        android:layout_gravity="center">
+    </ProgressBar>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
+        android:layout_width="match_parent"
+        android:isScrollContainer="true"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways"
+                android:background="@color/theme_primary"
+                app:titleTextAppearance="@style/toolbarStyle"/>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/layoutMainProduct1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/productBackground">
+
+                    <RelativeLayout
+                        android:id="@+id/layoutPager"
+                        android:layout_height="250dp"
+                        android:layout_width="match_parent">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/pager"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:background="@drawable/color_cursor_white">
+                    </android.support.v4.view.ViewPager>
+
+                    <TextView
+                        android:id="@+id/lblPictureQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 Fotos"
+                        android:textColor="@color/white"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="#40000000"
+                        android:padding="5dp"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_below="@id/layoutPager"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp">
+
+                        <TextView
+                            android:id="@+id/lblUsed"
+                            android:layout_width="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/productUsed"
+                            android:text="USADO"
+                            android:layout_marginTop="10dp"/>
+
+                        <TextView
+                            android:id="@+id/lblTitle"
+                            android:layout_width="wrap_content"
+                            style="@style/Base.TextAppearance.AppCompat.Large"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lblUsed"
+                            android:textColor="@color/productTitle"
+                            android:text="Pc Armada Sliml Inter Amd Dual Core Gamer Minecrat Lol Hdmi"
+                            android:layout_marginTop="6dp"/>
+
+                        <RatingBar
+                            android:id="@+id/ratingBar"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxHeight="30dp"
+                            android:minHeight="30dp"
+                            android:transformPivotX="0dp"
+                            android:transformPivotY="0dp"
+                            android:scaleX="1.5"
+                            android:scaleY="1.5"
+                            android:layout_marginTop="5dp"
+                            android:numStars="5"
+                            android:rating="4.5"
+                            android:isIndicator="true"
+                            android:layout_below="@id/lblTitle"
+                            android:progressTint="@color/startFill"
+                        />
+
+                        <TextView
+                            android:id="@+id/lblPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$ 4000"
+                            android:textSize="30sp"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/productPrice"
+                            android:layout_below="@+id/ratingBar"/>
+
+                        <RelativeLayout
+                            android:id="@+id/layoutPay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lblPrice"
+                            android:layout_marginTop="15dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/imgCard"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:src="@drawable/card_icon"/>
+
+                            <TextView
+                                android:id="@+id/lblPay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/productPayNoRate"
+                                android:layout_toRightOf="@+id/imgCard"
+                                android:text="Pagá en hasta 12 cuotas"/>
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/next"/>
+
+                            <LinearLayout
+                                android:id="@+id/line1"
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:layout_marginTop="25dp"
+                                android:layout_marginLeft="50dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_below="@+id/lblPay"
+                                android:background="#e3e3e3"
+                                android:orientation="horizontal" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layoutDelivery"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/layoutPay"
+                            android:layout_marginTop="5dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/imgTruck"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:src="@drawable/truck_icon_free"/>
+
+                            <TextView
+                                android:id="@+id/lblShipping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_toRightOf="@+id/imgTruck"
+                                android:textColor="@color/productShippingFree"
+                                android:text="Envío gratis a todo el país"/>
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/next"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/btnQuantity"
+                            android:layout_marginTop="30dp"
+                            android:layout_below="@id/layoutDelivery"
+                            android:layout_width="match_parent"
+                            android:background="@color/white"
+                            android:layout_height="50dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/lblQuantity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_centerVertical="true"
+                                android:text="Cantidad: "/>
+
+                            <TextView
+                                android:id="@+id/lblQuantityNumber"
+                                android:layout_toRightOf="@+id/lblQuantity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_centerVertical="true"
+                                android:text="1"/>
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/next"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/btnBuy"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:clickable="true"
+                            android:layout_below="@id/btnQuantity"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/button_fill_drawable"
+                            android:layout_marginTop="20dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Comprar"
+                                android:textSize="17sp"
+                                android:textColor="@color/white"
+                                android:layout_centerHorizontal="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/btnAddToCart"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:clickable="true"
+                            android:layout_below="@id/btnBuy"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/button_add_to_cart_drawable"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Agregar al carrito"
+                                android:textSize="17sp"
+                                android:textColor="@color/btnBuy"
+                                android:layout_centerHorizontal="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/layoutSolPointComment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/btnAddToCart"
+                            android:layout_marginTop="20dp">
+
+                            <ImageView
+                                android:id="@+id/imgOk"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ok"/>
+
+                            <TextView
+                                android:id="@+id/lblProtectedBuyAndQuantitySold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/imgOk"
+                                android:layout_marginLeft="10dp"
+                                android:text="Compra protegida - 60 vendidos"/>
+
+                            <ImageView
+                                android:id="@+id/imgTrophy"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/trophy"
+                                android:layout_below="@id/imgOk"
+                                android:layout_marginTop="10dp"/>
+
+                            <TextView
+                                android:id="@+id/lblPoints"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/imgTrophy"
+                                android:layout_marginLeft="10dp"
+                                android:layout_below="@id/lblProtectedBuyAndQuantitySold"
+                                android:layout_marginTop="10dp"
+                                android:text="Sumas 456 Mercado Puntos"/>
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/comment"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/btnAddToFavorite"
+                            android:clickable="true"
+                            android:layout_below="@id/layoutSolPointComment"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginLeft="30dp"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/imgHeart"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/heart"
+                                android:layout_centerVertical="true"/>
+
+                            <TextView
+                                android:id="@+id/lblAddFav"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Agregar a favoritos"
+                                android:textSize="13sp"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/btnBuy"
+                                android:layout_toRightOf="@id/imgHeart"
+                                android:layout_marginLeft="10dp"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/btnShare"
+                            android:clickable="true"
+                            android:layout_below="@id/layoutSolPointComment"
+                            android:layout_toRightOf="@id/btnAddToFavorite"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginBottom="30dp"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/imgShare"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:src="@drawable/share"
+                                android:layout_centerVertical="true"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Compartir"
+                                android:textSize="13sp"
+                                android:layout_centerVertical="true"
+                                android:textColor="@color/btnBuy"
+                                android:layout_toRightOf="@id/imgShare"
+                                android:layout_marginLeft="10dp"/>
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layoutMainProduct2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:background="@color/white"
+                    android:layout_below="@id/layoutMainProduct1">
+
+                    <TextView
+                        android:id="@+id/lblTitleInfoSeller"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Información del vendedor"
+                        android:textSize="18sp"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/titleProduct"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="22dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/next"/>
+
+                    <ImageView
+                        android:id="@+id/imgLocation"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/location"
+                        android:layout_below="@id/lblTitleInfoSeller"
+                        android:layout_marginTop="20dp"/>
+
+                    <TextView
+                        android:id="@+id/lblLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/imgLocation"
+                        android:text="Ubicación"
+                        android:textSize="17sp"
+                        android:layout_marginTop="18dp"
+                        android:layout_below="@id/lblTitleInfoSeller"
+                        android:layout_marginLeft="15dp"/>
+
+                    <TextView
+                        android:id="@+id/lblLocationSeller"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/imgLocation"
+                        android:text="Virreyes, Buenos Aires"
+                        android:textSize="14sp"
+                        android:layout_marginTop="2dp"
+                        android:layout_below="@id/lblLocation"
+                        android:layout_marginLeft="15dp"/>
+                </RelativeLayout>
+            </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

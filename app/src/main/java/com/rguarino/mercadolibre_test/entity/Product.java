@@ -36,6 +36,13 @@ public class Product implements Parcelable {
     private Review reviews;
     private List<Attribute> attributes;
     private List<Picture> pictures;
+    private String description;
+
+    /**
+     * classified
+     * buy_it_now
+     */
+    private String buying_mode;
 
     public Product() {
     }
@@ -51,6 +58,8 @@ public class Product implements Parcelable {
         this.thumbnail = in.readString();
         this.accepts_mercadopago = in.readInt() == 1 ? true : false;
         this.currency_id = in.readString();
+        this.description = in.readString();
+        this.buying_mode = in.readString();
         this.installments = in.readParcelable(Installment.class.getClassLoader());
         this.address = in.readParcelable(Address.class.getClassLoader());
         this.shipping = in.readParcelable(Shipping.class.getClassLoader());
@@ -100,6 +109,8 @@ public class Product implements Parcelable {
         parcel.writeString(this.thumbnail);
         parcel.writeInt(this.accepts_mercadopago ? 1 : 0);
         parcel.writeString(this.currency_id);
+        parcel.writeString(this.description);
+        parcel.writeString(this.buying_mode);
         parcel.writeParcelable(this.installments, i);
         parcel.writeParcelable(this.address, i);
         parcel.writeParcelable(this.shipping, i);
@@ -238,5 +249,21 @@ public class Product implements Parcelable {
 
     public void setPictures(List<Picture> pictures) {
         this.pictures = pictures;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getBuying_mode() {
+        return buying_mode;
+    }
+
+    public void setBuying_mode(String buying_mode) {
+        this.buying_mode = buying_mode;
     }
 }

@@ -12,6 +12,10 @@ public class Picture implements Parcelable {
     public Picture() {
     }
 
+    public Picture(String url) {
+        this.url = url;
+    }
+
     protected Picture(Parcel in) {
         this.id = in.readString();
         this.url = in.readString();

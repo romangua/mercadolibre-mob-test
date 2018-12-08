@@ -13,6 +13,11 @@
     <color name="startEmpty">#c9c9c9</color>
     <color name="productTitle">#474747</color>
     <color name="productPrice">#303030</color>
+    <color name="productPay">#141414</color>
+    <color name="productPayNoRate">#8bab68</color>
+    <color name="productUsed">#8f8f8f</color>
+    <color name="productShipping">#141414</color>
+    <color name="productShippingFree">#8bab68</color>
     <color name="productBackground">#ededed</color>
     <color name="white">#ffffff</color>
     <color name="btnBuy">#3485f7</color>
