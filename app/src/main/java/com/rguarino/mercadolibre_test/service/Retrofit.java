@@ -24,7 +24,7 @@ public abstract class Retrofit implements Callback<ResponseBody> {
 
 
     private static final String BASE_URL = "https://api.mercadolibre.com/";
-
+    public static final int PRODUCT_INCREASE_PAGER = 20;
     private static OkHttpClient client;
     private static ApiInterface apiInterface;
 
@@ -45,9 +45,9 @@ public abstract class Retrofit implements Callback<ResponseBody> {
                 .build().create(Retrofit.ApiInterface.class);
     }
 
-    public static Call<ResponseBody> searchItems(String search) {
+    public static Call<ResponseBody> searchItems(String search, Integer offset) {
         init();
-        return apiInterface.searchItems("sites/MLA/search", search);
+        return apiInterface.searchItems("sites/MLA/search", PRODUCT_INCREASE_PAGER, offset, search);
     }
 
     public static Call<ResponseBody> getItem(String itemId) {
@@ -59,6 +59,8 @@ public abstract class Retrofit implements Callback<ResponseBody> {
         @GET
         Call<ResponseBody> searchItems(
                 @Url String endPoint,
+                @Query("limit") Integer limit,
+                @Query("offset") Integer offset,
                 @Query("q") String search);
 
         @GET

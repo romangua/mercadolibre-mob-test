@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#3F51B5</color>
     <color name="progressBar">#009fd9</color>
+    <color name="progressBarLoadMore">#c9c9c9</color>
     <color name="listTitle">#8a8a8a</color>
     <color name="listPrice">#333333</color>
     <color name="listShipping">#8bab68</color>
@@ -18,4 +19,6 @@
     <color name="btnBuyPress">#3a8cf0</color>
     <color name="btnDisable">#afb5ba</color>
     <color name="titleProduct">#3d3d3d</color>
+    <color name="iconMenu">#333229</color>
+    <color name="titleToolbar">#333229</color>
 </resources>

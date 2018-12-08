@@ -28,4 +28,10 @@
         <!-- Hint for edit text-->
         <item name="android:hint">@string/search_hint</item>
     </style>
+
+
+    <style name="toolbarStyle" parent="@style/Base.TextAppearance.AppCompat.Title">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/titleToolbar</item>
+    </style>
 </resources>
