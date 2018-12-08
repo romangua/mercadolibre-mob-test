@@ -11,50 +11,80 @@
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lblTitle"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/image"
         android:layout_marginLeft="20dp"
-        android:textSize="13sp"
-        android:text="MacBook Air 13"
-        android:textColor="@color/listTitle"
-        android:layout_toRightOf="@+id/image"/>
+        android:gravity="center_vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lblPrice"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblTitle"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="13sp"
+            android:text="MacBook Air 13"
+            android:textColor="@color/listTitle"/>
 
-        android:layout_marginLeft="20dp"
-        android:text="$10.999"
-        android:textSize="20sp"
-        android:textColor="@color/listPrice"
-        android:layout_below="@+id/lblTitle"
-        android:layout_toRightOf="@+id/image"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblPrice"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="$10.999"
+            android:textSize="20sp"
+            android:textColor="@color/listPrice"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lblInstallments"
-        android:layout_marginLeft="20dp"
-        android:textSize="12sp"
-        android:layout_below="@+id/lblPrice"
-        android:textColor="@color/listInstallments"
-        android:text="Hasta 6 cuotas sin interés"
-        android:layout_toRightOf="@+id/image"/>
+        <LinearLayout
+            android:id="@+id/layoutInstallments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lblShipping"
-        android:layout_marginLeft="20dp"
-        android:textSize="12sp"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/listShipping"
-        android:layout_below="@+id/lblInstallments"
-        android:text="Envío gratis"
-        android:layout_toRightOf="@+id/image"/>
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/card"
+                android:tint="@color/listInstallments"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblInstallments"
+                android:textSize="12sp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/listInstallments"
+                android:text="Hasta 6 cuotas sin interés"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutShipping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutInstallments"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/truck"
+                android:tint="@color/listInstallments"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblShipping"
+                android:layout_marginLeft="5dp"
+                android:textSize="12sp"
+                android:textColor="@color/listShipping"
+                android:text="Envío gratis"/>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

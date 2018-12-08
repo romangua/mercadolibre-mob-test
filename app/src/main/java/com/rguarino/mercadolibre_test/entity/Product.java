@@ -1,22 +1,27 @@
 package com.rguarino.mercadolibre_test.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by dev3 on 07/12/2018.
  */
 
-public class Product {
+public class Product implements Parcelable {
     private String id;
     private String title;
-    private Float price;
+    private float price;
 
     /**
      * ARS
      */
     private String currency_id;
-    private Integer available_quantity;
-    private Integer sold_quantity;
+    private int available_quantity;
+    private int sold_quantity;
 
     /**
      * used
@@ -24,14 +29,95 @@ public class Product {
      */
     private String condition;
     private String thumbnail;
-    private Boolean accepts_mercadopago;
+    private boolean accepts_mercadopago;
     private Installment installments;
     private Address address;
     private Shipping shipping;
     private Review reviews;
-    private List<Attribute> atrAttributes;
+    private List<Attribute> attributes;
+    private List<Picture> pictures;
 
     public Product() {
+    }
+
+    protected Product(Parcel in) {
+        this.id = in.readString();
+        this.title = in.readString();
+        this.price = in.readFloat();
+        this.currency_id = in.readString();
+        this.available_quantity = in.readInt();
+        this.sold_quantity = in.readInt();
+        this.condition = in.readString();
+        this.thumbnail = in.readString();
+        this.accepts_mercadopago = in.readInt() == 1 ? true : false;
+        this.currency_id = in.readString();
+        this.installments = in.readParcelable(Installment.class.getClassLoader());
+        this.address = in.readParcelable(Address.class.getClassLoader());
+        this.shipping = in.readParcelable(Shipping.class.getClassLoader());
+        this.reviews = in.readParcelable(Review.class.getClassLoader());
+
+        if (in.readByte() == 0x01) {
+            this.attributes = new ArrayList<>();
+            in.readList(this.attributes, Attribute.class.getClassLoader());
+        } else {
+            this.attributes = null;
+        }
+
+        if (in.readByte() == 0x01) {
+            this.pictures = new ArrayList<>();
+            in.readList(this.pictures, Picture.class.getClassLoader());
+        } else {
+            this.pictures = null;
+        }
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(this.id);
+        parcel.writeString(this.title);
+        parcel.writeFloat(this.price);
+        parcel.writeString(this.currency_id);
+        parcel.writeInt(this.available_quantity);
+        parcel.writeInt(this.sold_quantity);
+        parcel.writeString(this.condition);
+        parcel.writeString(this.thumbnail);
+        parcel.writeInt(this.accepts_mercadopago ? 1 : 0);
+        parcel.writeString(this.currency_id);
+        parcel.writeParcelable(this.installments, i);
+        parcel.writeParcelable(this.address, i);
+        parcel.writeParcelable(this.shipping, i);
+        parcel.writeParcelable(this.reviews, i);
+
+        if (this.attributes == null) {
+            parcel.writeByte((byte) (0x00));
+        } else {
+            parcel.writeByte((byte) (0x01));
+            parcel.writeList(this.attributes);
+        }
+
+        if (this.pictures == null) {
+            parcel.writeByte((byte) (0x00));
+        } else {
+            parcel.writeByte((byte) (0x01));
+            parcel.writeList(this.pictures);
+        }
     }
 
     public String getId() {
@@ -50,11 +136,11 @@ public class Product {
         this.title = title;
     }
 
-    public Float getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -66,19 +152,19 @@ public class Product {
         this.currency_id = currency_id;
     }
 
-    public Integer getAvailable_quantity() {
+    public int getAvailable_quantity() {
         return available_quantity;
     }
 
-    public void setAvailable_quantity(Integer available_quantity) {
+    public void setAvailable_quantity(int available_quantity) {
         this.available_quantity = available_quantity;
     }
 
-    public Integer getSold_quantity() {
+    public int getSold_quantity() {
         return sold_quantity;
     }
 
-    public void setSold_quantity(Integer sold_quantity) {
+    public void setSold_quantity(int sold_quantity) {
         this.sold_quantity = sold_quantity;
     }
 
@@ -98,11 +184,11 @@ public class Product {
         this.thumbnail = thumbnail;
     }
 
-    public Boolean getAccepts_mercadopago() {
+    public boolean isAccepts_mercadopago() {
         return accepts_mercadopago;
     }
 
-    public void setAccepts_mercadopago(Boolean accepts_mercadopago) {
+    public void setAccepts_mercadopago(boolean accepts_mercadopago) {
         this.accepts_mercadopago = accepts_mercadopago;
     }
 
@@ -138,11 +224,19 @@ public class Product {
         this.reviews = reviews;
     }
 
-    public List<Attribute> getAtrAttributes() {
-        return atrAttributes;
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 
-    public void setAtrAttributes(List<Attribute> atrAttributes) {
-        this.atrAttributes = atrAttributes;
+    public void setAttributes(List<Attribute> attributes) {
+        this.attributes = attributes;
+    }
+
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
     }
 }

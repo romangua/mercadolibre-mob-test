@@ -1,11 +1,43 @@
 package com.rguarino.mercadolibre_test.entity;
 
-public class Picture {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class Picture implements Parcelable {
     private String id;
     private String url;
 
     public Picture() {
+    }
 
+    protected Picture(Parcel in) {
+        this.id = in.readString();
+        this.url = in.readString();
+    }
+
+    public static final Parcelable.Creator<Picture> CREATOR = new Parcelable.Creator<Picture>() {
+        @Override
+        public Picture createFromParcel(Parcel in) {
+            return new Picture(in);
+        }
+
+        @Override
+        public Picture[] newArray(int size) {
+            return new Picture[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(this.id);
+        parcel.writeString(this.url);
     }
 
     public String getId() {

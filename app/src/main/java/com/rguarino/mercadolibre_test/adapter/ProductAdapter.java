@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -45,14 +46,6 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 super.onScrolled(recyclerView, dx, dy);
                 totalItemCount = linearLayoutManager.getItemCount();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-                if(isLoading) {
-                    Log.e("isLoading", "true");
-                } else {
-                    Log.e("isLoading", "false");
-                }
-                Log.e("totalItemCount", ""+totalItemCount);
-                Log.e("lastVisibleItem", ""+lastVisibleItem);
-                Log.e("visibleThreashold", ""+visibleThreshold);
 
                 if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
                     if (onLoadMoreListener != null) {
@@ -74,8 +67,18 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemViewType(int position) {
         return listProduct.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+    }
+
+    @Override
+    public int getItemCount() {
+        return listProduct == null ? 0 : listProduct.size();
     }
 
     @Override
@@ -95,20 +98,23 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder instanceof ProductViewHolder) {
             Product product = listProduct.get(position);
             final ProductViewHolder viewHolder = (ProductViewHolder) holder;
+            viewHolder.setIsRecyclable(false);
             viewHolder.lblTitle.setText(product.getTitle());
-            String price = String.format("%,d", product.getPrice().intValue());
+            String price = String.format("%,d", (int)product.getPrice());
             viewHolder.lblPrice.setText("$ " + price);
 
-            if (product.getInstallments() != null && product.getInstallments().getRate().intValue() == 0) {
+            if (product.getInstallments() != null && product.getInstallments().getRate() == 0) {
                 viewHolder.lblInstallments.setText("Hasta " + product.getInstallments().getQuantity() + " cuotas sin interés");
+                viewHolder.layoutInstallments.setVisibility(View.VISIBLE);
             } else {
-                viewHolder.lblInstallments.setVisibility(View.GONE);
+                viewHolder.layoutInstallments.setVisibility(View.GONE);
             }
 
             if (product.getShipping().getFree_shipping()) {
                 viewHolder.lblShipping.setText("Envío gratis");
+                viewHolder.layoutShipping.setVisibility(View.VISIBLE);
             } else {
-                viewHolder.lblShipping.setVisibility(View.GONE);
+                viewHolder.layoutShipping.setVisibility(View.GONE);
             }
 
             Glide
@@ -121,16 +127,13 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return listProduct == null ? 0 : listProduct.size();
-    }
-
     private class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView lblTitle;
         TextView lblPrice;
+        LinearLayout layoutInstallments;
         TextView lblInstallments;
+        LinearLayout layoutShipping;
         TextView lblShipping;
 
         public ProductViewHolder(View view) {
@@ -138,7 +141,9 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             image = view.findViewById(R.id.image);
             lblTitle = view.findViewById(R.id.lblTitle);
             lblPrice = view.findViewById(R.id.lblPrice);
+            layoutInstallments = view.findViewById(R.id.layoutInstallments);
             lblInstallments = view.findViewById(R.id.lblInstallments);
+            layoutShipping = view.findViewById(R.id.layoutShipping);
             lblShipping = view.findViewById(R.id.lblShipping);
 
             view.setOnClickListener(new View.OnClickListener() {

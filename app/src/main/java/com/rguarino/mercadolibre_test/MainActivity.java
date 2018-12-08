@@ -100,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void viewOnClick(View v, int position_p) {
                 Intent i = new Intent(MainActivity.this, ProductActivity.class);
-                //i.putExtra("idCampo", campos.get(position_p).getId());
-                startActivity(i);
+                i.putExtra("product", items.get(position_p));
+                startActivityForResult(i, 1);
                 overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
             }
         });
@@ -113,12 +113,14 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                getSupportActionBar().setTitle(query);
+                progressBar.setVisibility(View.VISIBLE);
                 isSearching = true;
+                offset = 0;
                 items.clear();
                 productAdapter.notifyDataSetChanged();
                 currentQuery = query;
                 searchInAPI(currentQuery);
-                progressBar.setVisibility(View.VISIBLE);
                 return false;
             }
 
@@ -126,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
 
                 //TODO Aca gestionamos las sugerencias
-                //searchInAPI(newText);
                 //searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
                 return false;
             }

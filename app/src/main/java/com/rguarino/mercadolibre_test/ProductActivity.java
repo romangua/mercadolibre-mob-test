@@ -34,6 +34,7 @@ public class ProductActivity extends AppCompatActivity {
 
     private FrameLayout container;
     private ProgressBar progressBar;
+    private Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class ProductActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle(R.string.product);
         }
+
+        product = (Product) getIntent().getExtras().getParcelable("product");
 
         progressBar = findViewById(R.id.progressBar);
         container = findViewById(R.id.container);
