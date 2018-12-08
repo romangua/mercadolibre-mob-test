@@ -365,7 +365,7 @@
                             android:layout_width="wrap_content"
                             android:layout_marginTop="30dp"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginBottom="30dp"
+                            android:layout_marginBottom="25dp"
                             android:layout_height="wrap_content">
 
                             <ImageView
@@ -442,6 +442,127 @@
                         android:layout_marginTop="2dp"
                         android:layout_below="@id/lblLocation"
                         android:layout_marginLeft="15dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/line2"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@+id/lblLocationSeller"
+                        android:background="#e3e3e3"
+                        android:orientation="horizontal" />
+
+                    <TextView
+                        android:id="@+id/lblWarrantyTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Garantia"
+                        android:textSize="18sp"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/titleProduct"
+                        android:layout_below="@id/line2"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="22dp"
+                        android:layout_below="@id/line2"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/next"/>
+
+                    <TextView
+                        android:id="@+id/lblWarranty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Compra protegida con Mercado Pago"
+                        android:textSize="14sp"
+                        android:layout_marginTop="20dp"
+                        android:layout_below="@id/lblWarrantyTitle"
+                        android:layout_marginLeft="15dp"/>
+
+                    <TextView
+                        android:id="@+id/lblWarrantySub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Recibí el producto que esperabas o te devolvemos tu dinero."
+                        android:textSize="14sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_below="@id/lblWarranty"
+                        android:layout_marginLeft="15dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/line3"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@+id/lblWarrantySub"
+                        android:background="#e3e3e3"
+                        android:orientation="horizontal" />
+
+                    <TextView
+                        android:id="@+id/lblAttriuteTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Características"
+                        android:textSize="18sp"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/titleProduct"
+                        android:layout_below="@id/line3"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="22dp"
+                        android:layout_below="@id/line3"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/next"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerViewAttribute"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:layout_below="@id/lblAttriuteTitle"
+                        android:scrollbars="none"/>
+
+                    <LinearLayout
+                        android:id="@+id/line4"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_below="@+id/recyclerViewAttribute"
+                        android:background="#e3e3e3"
+                        android:orientation="horizontal" />
+
+                    <TextView
+                        android:id="@+id/lblDescriptionTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Descripción"
+                        android:textSize="18sp"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/titleProduct"
+                        android:layout_below="@id/line4"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="22dp"
+                        android:layout_below="@id/line4"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/next"/>
+
+                    <TextView
+                        android:id="@+id/lblDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Obteniendo desriscripción..."
+                        android:paddingBottom="20dp"
+                        android:textSize="14sp"
+                        android:layout_marginTop="20dp"
+                        android:layout_below="@id/lblDescriptionTitle"
+                        android:layout_marginLeft="15dp"/>
+
                 </RelativeLayout>
             </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>

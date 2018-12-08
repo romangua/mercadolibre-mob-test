@@ -35,6 +35,11 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mOnViewListener = mOnViewListener;
     }
 
+    private OnLoadMoreListener onLoadMoreListener;
+    public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
+        this.onLoadMoreListener = mOnLoadMoreListener;
+    }
+
     public ProductAdapter(Context activity, RecyclerView recyclerView, List<Product> listProduct) {
         this.context = activity;
         this.listProduct = listProduct;
@@ -55,11 +60,6 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             }
         });
-    }
-
-    private OnLoadMoreListener onLoadMoreListener;
-    public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
-        this.onLoadMoreListener = mOnLoadMoreListener;
     }
 
     public void loadEnded() {

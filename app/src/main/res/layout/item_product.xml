@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblInstallments"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/listInstallments"
                 android:text="Hasta 6 cuotas sin interés"/>
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/lblShipping"
                 android:layout_marginLeft="5dp"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:textColor="@color/listShipping"
                 android:text="Envío gratis"/>
         </LinearLayout>

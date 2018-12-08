@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -47,6 +50,7 @@ public class ProductActivity extends AppCompatActivity {
     private TextView lblProtectedBuyAndQuantitySold;
     private TextView lblPoints;
     private TextView lblLocationSeller;
+    private TextView lblDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,23 +78,31 @@ public class ProductActivity extends AppCompatActivity {
         lblProtectedBuyAndQuantitySold = findViewById(R.id.lblProtectedBuyAndQuantitySold);
         lblPoints = findViewById(R.id.lblPoints);
         lblLocationSeller = findViewById(R.id.lblLocationSeller);
+        lblDescription = findViewById(R.id.lblDescription);
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewAttribute);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        AttributeAdapter attributeAdapter = new AttributeAdapter(this.getApplicationContext(), product.getAttributes());
+        recyclerView.setAdapter(attributeAdapter);
 
         searchItem();
+        getDescription();
         fillActivity();
     }
 
     private void fillActivity() {
         pictures = new ArrayList<>();
-        pictures.add(new Picture(product.getThumbnail()));
         picturePagerAdapter = new PicturePagerAdapter(this.getApplicationContext(), pictures);
         pager.setAdapter(picturePagerAdapter);
 
         picturePagerAdapter.setOnViewListener(new OnViewListener() {
             @Override
             public void viewOnClick(View v, int position) {
-                Intent i = new Intent(ProductActivity.this, PhotoViewActivity.class);
-                i.putExtra("url", product.getPictures().get(pager.getCurrentItem()).getUrl());
-                startActivity(i);
+                try {
+                    Intent i = new Intent(ProductActivity.this, PhotoViewActivity.class);
+                    i.putExtra("url", product.getPictures().get(pager.getCurrentItem()).getUrl());
+                    startActivity(i);
+                }catch (Exception e){}
             }
         });
 
@@ -153,6 +165,27 @@ public class ProductActivity extends AppCompatActivity {
                             lblPictureQuantity.setVisibility(View.VISIBLE);
                             lblPictureQuantity.setText(product.getPictures().size() + " Fotos");
 
+                        } catch (Exception e) {
+                            manageError();
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(int statusCode, String message) {
+                        manageError();
+                    }
+                });
+    }
+
+    public void getDescription() {
+        Retrofit.getItemDescription(product.getId())
+                .enqueue(new Retrofit() {
+                    @Override
+                    public void onResponse(int statusCode, JSONObject jResponse) {
+                        try {
+                            String description = jResponse.getString("plain_text");
+                            lblDescription.setText(description);
                         } catch (Exception e) {
                             manageError();
                             e.printStackTrace();

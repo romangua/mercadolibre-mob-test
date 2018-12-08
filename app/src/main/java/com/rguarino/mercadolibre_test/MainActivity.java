@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
             public void onSearchViewShown() {
                 layoutNoItems.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -228,12 +229,14 @@ public class MainActivity extends AppCompatActivity {
                                 productAdapter.notifyDataSetChanged();
                                 productAdapter.loadEnded();
 
-                                progressBar.setVisibility(View.GONE);
-                                if(items.size() > 0) {
-                                    layoutNoItems.setVisibility(View.GONE);
-                                    recyclerView.setVisibility(View.VISIBLE);
-                                } else {
-                                    layoutNoItems.setVisibility(View.VISIBLE);
+                                if(!searchView.isSearchOpen()) {
+                                    progressBar.setVisibility(View.GONE);
+                                    if (items.size() > 0) {
+                                        layoutNoItems.setVisibility(View.GONE);
+                                        recyclerView.setVisibility(View.VISIBLE);
+                                    } else {
+                                        layoutNoItems.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             } catch (Exception e) {
                                 manageError();
