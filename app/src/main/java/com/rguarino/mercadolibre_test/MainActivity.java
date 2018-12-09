@@ -2,10 +2,11 @@ package com.rguarino.mercadolibre_test;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.ArraySet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -16,10 +17,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -33,13 +32,28 @@ import com.rguarino.mercadolibre_test.interfaces.OnLoadMoreListener;
 import com.rguarino.mercadolibre_test.interfaces.OnViewListener;
 import com.rguarino.mercadolibre_test.service.Retrofit;
 import org.json.JSONObject;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Suggestion persistence
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor shareEditor;
+    private final String SUGGESTION_SEARCH = "SUGGESTION_SEARCH";
+    private int PRIVATE_MODE = 0;
+    private Set<String> suggestion;
+
+    // Search
+    private Boolean isSearching = false;
+    private Integer offset = 0;
+    private Boolean noMore = false;
+    private String currentQuery;
+    public final int PRODUCT_INCREASE_PAGER = 20;
+
+    // Views
     private FrameLayout container;
     private MaterialSearchView searchView;
     private RelativeLayout layoutNoItems;
@@ -47,10 +61,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
     private List<Product> items;
-    private Boolean isSearching = false;
-    private Integer offset = 0;
-    private Boolean noMore = false;
-    private String currentQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.mercadolibre);
+
+        sharedPreferences = getSharedPreferences(SUGGESTION_SEARCH, PRIVATE_MODE);
+        shareEditor = sharedPreferences.edit();
+        suggestion = sharedPreferences.getStringSet(SUGGESTION_SEARCH, new ArraySet<String>());
 
         layoutNoItems = findViewById(R.id.layout_no_items);
         progressBar = findViewById(R.id.progressBar);
@@ -75,72 +89,34 @@ public class MainActivity extends AppCompatActivity {
         horizontalDecoration.setDrawable(horizontalDivider);
         recyclerView.addItemDecoration(horizontalDecoration);
 
-        productAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                if (!noMore) {
-                    recyclerView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Agrego un item null para manejar la view del loader
-                            items.add(null);
-                            productAdapter.notifyItemInserted(items.size() - 1);
-
-                            searchInAPI(currentQuery);
-                        }
-                    });
-                }
-            }
-        });
-
-        productAdapter.setOnViewListener(new OnViewListener() {
-            @Override
-            public void viewOnClick(View v, int position_p) {
-                Product item = items.get(position_p);
-                if (item.getBuying_mode().equals("buy_it_now")) {
-                    Intent i = new Intent(MainActivity.this, ProductActivity.class);
-                    i.putExtra("product", item);
-                    startActivityForResult(i, 1);
-                    overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
-                } else {
-                    new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Atención")
-                            .setMessage("Solo se permite ver el detalle de productos del tipo 'buy_it_now', no esta permitido otros tales como 'classified'. Realiza una búsqueda del tipo Celular o Notebook")
-                            .setCancelable(false)
-                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-
-                                }
-                            }).show();
-
-                }
-            }
-        });
-
         searchView = findViewById(R.id.search_view);
         searchView.setVoiceSearch(false);
         searchView.setCursorDrawable(R.drawable.custom_cursor);
         searchView.setEllipsize(true);
+        searchView.setSuggestions(suggestion.toArray(new String[suggestion.size()]));
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 getSupportActionBar().setTitle(query);
                 progressBar.setVisibility(View.VISIBLE);
-                isSearching = true;
                 offset = 0;
                 items.clear();
                 productAdapter.notifyDataSetChanged();
                 currentQuery = query;
-                searchInAPI(currentQuery);
+
+                if(!suggestion.contains(currentQuery)) {
+                    suggestion.add(currentQuery);
+                    shareEditor.putStringSet(SUGGESTION_SEARCH, suggestion);
+                    shareEditor.commit();
+                    searchView.setSuggestions(suggestion.toArray(new String[suggestion.size()]));
+                }
+
+                searchItems();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
-                //TODO Aca gestionamos las sugerencias
-                //searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
                 return false;
             }
         });
@@ -160,6 +136,49 @@ public class MainActivity extends AppCompatActivity {
                         recyclerView.setVisibility(View.VISIBLE);
                     else
                         layoutNoItems.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        productAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                if (!noMore) {
+                    recyclerView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Agrego un item null para manejar la view del loader
+                            items.add(null);
+                            productAdapter.notifyItemInserted(items.size() - 1);
+
+                            searchItems();
+                        }
+                    });
+                }
+            }
+        });
+
+        productAdapter.setOnViewListener(new OnViewListener() {
+            @Override
+            public void viewOnClick(View v, int position_p) {
+                Product item = items.get(position_p);
+                if (item.getBuying_mode().equals("buy_it_now")) {
+                    Intent i = new Intent(MainActivity.this, ProductActivity.class);
+                    i.putExtra("product", item);
+                    startActivityForResult(i, 1);
+                    overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
+                } else {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Atención")
+                            .setMessage("Solo se permite ver el detalle de productos del tipo 'buy_it_now', no esta permitido otros tales como 'classified'. Realiza una búsqueda tal como 'Celular', 'Notebook' u otros")
+                            .setCancelable(false)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            }).show();
+
                 }
             }
         });
@@ -199,63 +218,63 @@ public class MainActivity extends AppCompatActivity {
                     searchView.setQuery(searchWrd, false);
                 }
             }
-
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void searchInAPI(String text) {
-        if (text != null && !text.isEmpty()) {
-            Retrofit.searchItems(text, offset)
-                    .enqueue(new Retrofit() {
-                        @Override
-                        public void onResponse(int statusCode, JSONObject jResponse) {
-                            try {
-                                int total = jResponse.getJSONObject("paging").getInt("total");
-                                offset+= Retrofit.PRODUCT_INCREASE_PAGER;
-                                noMore = offset >= total;
-                                isSearching = false;
+    public void searchItems() {
+        isSearching = true;
+        Retrofit.searchItems(PRODUCT_INCREASE_PAGER, currentQuery, offset)
+                .enqueue(new Retrofit() {
+                    @Override
+                    public void onResponse(int statusCode, JSONObject jResponse) {
+                        try {
+                            int total = jResponse.getJSONObject("paging").getInt("total");
+                            offset+= PRODUCT_INCREASE_PAGER;
+                            noMore = offset >= total;
+                            isSearching = false;
 
-                                Type productType = new TypeToken<List<Product>>() { }.getType();
-                                List<Product> products = new Gson().fromJson(jResponse.getJSONArray("results").toString(), productType);
+                            Type productType = new TypeToken<List<Product>>() {}.getType();
+                            List<Product> products = new Gson().fromJson(jResponse.getJSONArray("results").toString(), productType);
 
-                                // Elimino el loader
-                                if(items.size() > 0)
-                                    items.remove(items.size() - 1);
-
-                                // Agrego productos y refresco
-                                items.addAll(products);
-                                productAdapter.notifyDataSetChanged();
-                                productAdapter.loadEnded();
-
-                                if(!searchView.isSearchOpen()) {
-                                    progressBar.setVisibility(View.GONE);
-                                    if (items.size() > 0) {
-                                        layoutNoItems.setVisibility(View.GONE);
-                                        recyclerView.setVisibility(View.VISIBLE);
-                                    } else {
-                                        layoutNoItems.setVisibility(View.VISIBLE);
-                                    }
-                                }
-                            } catch (Exception e) {
-                                manageError();
-                                e.printStackTrace();
+                            // Elimino el loader more
+                            if(items.size() > 0 && items.get(items.size() -1) == null) {
+                                items.remove(items.size() - 1);
                             }
-                        }
 
-                        @Override
-                        public void onFailed(int statusCode, String message) {
-                            manageError();
+                            // Agrego productos y refresco
+                            items.addAll(products);
+                            productAdapter.notifyDataSetChanged();
+                            productAdapter.loadEnded();
+
+                            if(!searchView.isSearchOpen()) {
+                                progressBar.setVisibility(View.GONE);
+                                if (items.size() > 0) {
+                                    layoutNoItems.setVisibility(View.GONE);
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                } else {
+                                    layoutNoItems.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        } catch (Exception e) {
+                            manageError(null);
+                            e.printStackTrace();
                         }
-                    });
-        }
+                    }
+
+                    @Override
+                    public void onFailed(int statusCode, String message) {
+                        manageError(message);
+                    }
+                });
     }
 
-    private void manageError() {
+    private void manageError(String message) {
         isSearching = false;
         progressBar.setVisibility(View.GONE);
-        Snackbar.make(container, "Ocurrio un error inesperado, reintente", Snackbar.LENGTH_LONG)
+        Snackbar
+                .make(container, message != null ? message : "Ocurrio un error inesperado, reintente", Snackbar.LENGTH_LONG)
                 .show();
     }
 }
