@@ -57,10 +57,11 @@
             android:paddingLeft="50dp"
             app:titleTextAppearance="@style/toolbarStyle" />
 
-        <com.miguelcatalan.materialsearchview.MaterialSearchView
+        <com.rguarino.materialsearchview.MaterialSearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/MaterialSearchViewStyle"/>
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView

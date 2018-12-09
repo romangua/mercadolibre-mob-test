@@ -1,13 +1,10 @@
 <resources>
     <style name="MaterialSearchViewStyle">
-        <item name="searchBackground">@color/theme_primary</item>
-        <item name="searchVoiceIcon">@drawable/ic_action_voice_search_inverted</item>
-        <item name="searchCloseIcon">@drawable/ic_action_navigation_close_inverted</item>
-        <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back_inverted</item>
+        <item name="searchBackground">@color/white</item>
+        <item name="searchCloseIcon">@drawable/ic_action_navigation_close</item>
+        <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back</item>
         <item name="searchSuggestionIcon">@drawable/ic_suggestion</item>
         <item name="searchSuggestionBackground">@android:color/white</item>
-        <item name="android:textColor">@color/theme_primary_text_inverted</item>
-        <item name="android:textColorHint">@color/theme_secondary_text_inverted</item>
         <item name="android:hint">@string/search_hint</item>
     </style>
 

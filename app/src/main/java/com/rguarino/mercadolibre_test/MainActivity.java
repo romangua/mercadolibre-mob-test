@@ -25,7 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.rguarino.materialsearchview.MaterialSearchView;
 import com.rguarino.mercadolibre_test.adapter.ProductAdapter;
 import com.rguarino.mercadolibre_test.entity.Product;
 import com.rguarino.mercadolibre_test.interfaces.OnLoadMoreListener;
@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         searchView.setVoiceSearch(false);
         searchView.setCursorDrawable(R.drawable.custom_cursor);
         searchView.setEllipsize(true);
+        searchView.setSubmitOnClick(true);
         searchView.setSuggestions(suggestion.toArray(new String[suggestion.size()]));
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
