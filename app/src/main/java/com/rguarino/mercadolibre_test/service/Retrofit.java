@@ -1,7 +1,6 @@
 package com.rguarino.mercadolibre_test.service;
 
 import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -16,47 +15,44 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public abstract class Retrofit implements Callback<ResponseBody> {
 
-
     private static final String BASE_URL = "https://api.mercadolibre.com/";
-    public static final int PRODUCT_INCREASE_PAGER = 20;
     private static OkHttpClient client;
     private static ApiInterface apiInterface;
+    private static final Boolean showLog = false;
+
+    static {
+        if (client == null || apiInterface == null) {
+            client = new OkHttpClient.Builder()
+                    .connectTimeout(30, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(30, TimeUnit.SECONDS)
+                    .build();
+
+            apiInterface = new retrofit2.Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .client(client)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build().create(Retrofit.ApiInterface.class);
+        }
+    }
 
     public Retrofit() {
     }
 
-    private static void init() {
-        client  = new OkHttpClient.Builder()
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .build();
-
-        apiInterface = new retrofit2.Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build().create(Retrofit.ApiInterface.class);
-    }
-
-    public static Call<ResponseBody> searchItems(String search, Integer offset) {
-        init();
-        return apiInterface.searchItems("sites/MLA/search", PRODUCT_INCREASE_PAGER, offset, search);
+    public static Call<ResponseBody> searchItems(Integer increase, String search, Integer offset) {
+        return apiInterface.searchItems("sites/MLA/search", increase, offset, search);
     }
 
     public static Call<ResponseBody> getItem(String itemId) {
-        init();
         return apiInterface.getItem("items/" + itemId);
     }
 
     public static Call<ResponseBody> getItemDescription(String itemId) {
-        init();
         return apiInterface.getItem("items/" + itemId + "/description");
     }
 
@@ -96,7 +92,7 @@ public abstract class Retrofit implements Callback<ResponseBody> {
             e.printStackTrace();
             if (body != null)
                 log("onResponse", body.toString());
-            onFailed(response.code(), "Algo salió mal! Reintente");
+            onFailed(response.code(), "¡Algo salió mal! Reintente");
         }
     }
 
@@ -105,9 +101,9 @@ public abstract class Retrofit implements Callback<ResponseBody> {
         log("Response", call.request().url().toString() + "\n" + t.toString());
 
         if (t instanceof ConnectException || t instanceof SocketTimeoutException || t instanceof UnknownHostException) {
-            onFailed(0, "No se pudo conectar al servidor!");
+            onFailed(0, "¡No se pudo conectar al servidor!");
         } else if (t instanceof IOException) {
-            onFailed(0, "Algo salió mal! Reintente");
+            onFailed(0, "¡Algo salió mal! Reintente");
         } else {
             onFailed(0, t.getMessage());
         }
@@ -118,6 +114,8 @@ public abstract class Retrofit implements Callback<ResponseBody> {
     public abstract void onFailed(int statusCode, String message);
 
     private static void log(String a, String b) {
-        Log.e(a, b);
+        if(showLog) {
+            Log.e(a, b);
+        }
     }
 }

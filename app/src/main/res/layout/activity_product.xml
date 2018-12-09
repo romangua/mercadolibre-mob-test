@@ -78,9 +78,9 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:layout_below="@id/layoutPager"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
-                        android:layout_below="@id/layoutPager"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp">
 
@@ -163,24 +163,23 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:src="@drawable/next"/>
-
-                            <LinearLayout
-                                android:id="@+id/line1"
-                                android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:layout_marginTop="25dp"
-                                android:layout_marginLeft="50dp"
-                                android:layout_marginRight="10dp"
-                                android:layout_below="@+id/lblPay"
-                                android:background="#e3e3e3"
-                                android:orientation="horizontal" />
                         </RelativeLayout>
+                        <LinearLayout
+                            android:id="@+id/line1"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_below="@+id/layoutPay"
+                            android:background="#e3e3e3"
+                            android:orientation="horizontal" />
 
                         <RelativeLayout
                             android:id="@+id/layoutDelivery"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/layoutPay"
+                            android:layout_below="@+id/line1"
                             android:layout_marginTop="5dp"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:orientation="horizontal">
@@ -248,7 +247,6 @@
                             android:id="@+id/btnBuy"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:clickable="true"
                             android:layout_below="@id/btnQuantity"
                             android:gravity="center_vertical"
                             android:background="@drawable/button_fill_drawable"
@@ -267,7 +265,6 @@
                             android:id="@+id/btnAddToCart"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:clickable="true"
                             android:layout_below="@id/btnBuy"
                             android:gravity="center_vertical"
                             android:background="@drawable/button_add_to_cart_drawable"
@@ -334,9 +331,9 @@
                             android:clickable="true"
                             android:layout_below="@id/layoutSolPointComment"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="30dp"
-                            android:layout_marginLeft="30dp"
-                            android:layout_height="wrap_content">
+                            android:layout_marginLeft="30dp">
 
                             <ImageView
                                 android:id="@+id/imgHeart"
@@ -359,14 +356,14 @@
 
                         <RelativeLayout
                             android:id="@+id/btnShare"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
                             android:clickable="true"
                             android:layout_below="@id/layoutSolPointComment"
                             android:layout_toRightOf="@id/btnAddToFavorite"
-                            android:layout_width="wrap_content"
                             android:layout_marginTop="30dp"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginBottom="25dp"
-                            android:layout_height="wrap_content">
+                            android:layout_marginBottom="25dp">
 
                             <ImageView
                                 android:id="@+id/imgShare"
@@ -389,7 +386,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/layoutMainProduct2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
@@ -521,7 +517,7 @@
                         android:id="@+id/recyclerViewAttribute"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="22dp"
+                        android:layout_marginTop="15dp"
                         android:layout_below="@id/lblAttriuteTitle"
                         android:scrollbars="none"/>
 

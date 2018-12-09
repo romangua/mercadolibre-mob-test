@@ -1,18 +1,13 @@
 package com.rguarino.mercadolibre_test.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import com.bumptech.glide.Glide;
-import com.rguarino.mercadolibre_test.PhotoViewActivity;
-import com.rguarino.mercadolibre_test.ProductActivity;
 import com.rguarino.mercadolibre_test.R;
 import com.rguarino.mercadolibre_test.entity.Picture;
 import com.rguarino.mercadolibre_test.interfaces.OnViewListener;
@@ -21,9 +16,9 @@ import java.util.List;
 
 public class PicturePagerAdapter extends PagerAdapter
 {
-    List<Picture> pictures;
-    Context mContext;
-    LayoutInflater mLayoutInflater;
+    private List<Picture> pictures;
+    private Context mContext;
+    private LayoutInflater mLayoutInflater;
 
     public PicturePagerAdapter(Context context, List<Picture> pictures) {
         mContext = context;

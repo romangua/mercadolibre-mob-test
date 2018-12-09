@@ -2,31 +2,19 @@ package com.rguarino.mercadolibre_test.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dev3 on 07/12/2018.
- */
-
 public class Product implements Parcelable {
+
     private String id;
     private String title;
     private float price;
-
-    /**
-     * ARS
-     */
     private String currency_id;
     private int available_quantity;
     private int sold_quantity;
 
-    /**
-     * used
-     * new
-     */
+    //used, new
     private String condition;
     private String thumbnail;
     private boolean accepts_mercadopago;
@@ -38,11 +26,9 @@ public class Product implements Parcelable {
     private List<Picture> pictures;
     private String description;
 
-    /**
-     * classified
-     * buy_it_now
-     */
+    //classified, buy_it_now
     private String buying_mode;
+    private String permalink;
 
     public Product() {
     }
@@ -60,6 +46,7 @@ public class Product implements Parcelable {
         this.currency_id = in.readString();
         this.description = in.readString();
         this.buying_mode = in.readString();
+        this.permalink = in.readString();
         this.installments = in.readParcelable(Installment.class.getClassLoader());
         this.address = in.readParcelable(Address.class.getClassLoader());
         this.shipping = in.readParcelable(Shipping.class.getClassLoader());
@@ -111,6 +98,7 @@ public class Product implements Parcelable {
         parcel.writeString(this.currency_id);
         parcel.writeString(this.description);
         parcel.writeString(this.buying_mode);
+        parcel.writeString(this.permalink);
         parcel.writeParcelable(this.installments, i);
         parcel.writeParcelable(this.address, i);
         parcel.writeParcelable(this.shipping, i);
@@ -265,5 +253,13 @@ public class Product implements Parcelable {
 
     public void setBuying_mode(String buying_mode) {
         this.buying_mode = buying_mode;
+    }
+
+    public String getPermalink() {
+        return permalink;
+    }
+
+    public void setPermalink(String permalink) {
+        this.permalink = permalink;
     }
 }

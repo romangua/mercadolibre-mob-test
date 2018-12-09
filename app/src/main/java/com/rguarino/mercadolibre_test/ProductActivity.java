@@ -1,22 +1,16 @@
 package com.rguarino.mercadolibre_test;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.google.gson.Gson;
@@ -34,7 +28,6 @@ import java.util.List;
 public class ProductActivity extends AppCompatActivity {
 
     private FrameLayout container;
-    private ProgressBar progressBar;
     private Product product;
     private ViewPager pager;
     private PicturePagerAdapter picturePagerAdapter;
@@ -51,6 +44,7 @@ public class ProductActivity extends AppCompatActivity {
     private TextView lblPoints;
     private TextView lblLocationSeller;
     private TextView lblDescription;
+    private RelativeLayout btnShare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +55,12 @@ public class ProductActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.product);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        product = getIntent().getExtras().getParcelable("product");
-        progressBar = findViewById(R.id.progressBar);
+        if(getIntent().hasExtra("product")) {
+            product = getIntent().getExtras().getParcelable("product");
+        } else {
+            this.onBackPressed();
+        }
+
         container = findViewById(R.id.container);
         pager = findViewById(R.id.pager);
         lblPictureQuantity = findViewById(R.id.lblPictureQuantity);
@@ -79,6 +77,17 @@ public class ProductActivity extends AppCompatActivity {
         lblPoints = findViewById(R.id.lblPoints);
         lblLocationSeller = findViewById(R.id.lblLocationSeller);
         lblDescription = findViewById(R.id.lblDescription);
+        btnShare = findViewById(R.id.btnShare);
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, product.getPermalink());
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent, "Compartir"));
+            }
+        });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewAttribute);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -146,7 +155,6 @@ public class ProductActivity extends AppCompatActivity {
         // $1000 = 50 points
         int points = (int)(product.getPrice() * 50) / 1000;
         lblPoints.setText("Sumas " + points + " Mercado Puntos");
-
     }
 
     public void searchItem() {
@@ -166,14 +174,14 @@ public class ProductActivity extends AppCompatActivity {
                             lblPictureQuantity.setText(product.getPictures().size() + " Fotos");
 
                         } catch (Exception e) {
-                            manageError();
+                            manageError(null);
                             e.printStackTrace();
                         }
                     }
 
                     @Override
                     public void onFailed(int statusCode, String message) {
-                        manageError();
+                        manageError(message);
                     }
                 });
     }
@@ -187,26 +195,16 @@ public class ProductActivity extends AppCompatActivity {
                             String description = jResponse.getString("plain_text");
                             lblDescription.setText(description);
                         } catch (Exception e) {
-                            manageError();
+                            manageError(null);
                             e.printStackTrace();
                         }
                     }
 
                     @Override
                     public void onFailed(int statusCode, String message) {
-                        manageError();
+                        manageError(message);
                     }
                 });
-    }
-
-    @Override
-    public View onCreateView(String name, Context context, AttributeSet attrs) {
-        return super.onCreateView(name, context, attrs);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
     }
 
     @Override
@@ -221,9 +219,9 @@ public class ProductActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
     }
 
-    private void manageError() {
-        progressBar.setVisibility(View.GONE);
-        Snackbar.make(container, "Ocurrio un error inesperado, reintente", Snackbar.LENGTH_LONG)
+    private void manageError(String message) {
+        Snackbar
+                .make(container, message != null ? message : "Ocurrio un error inesperado, reintente", Snackbar.LENGTH_LONG)
                 .show();
     }
 }

@@ -3,13 +3,8 @@ package com.rguarino.mercadolibre_test.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
-/**
- * Created by dev3 on 07/12/2018.
- */
-
 public class Review implements Parcelable {
+
     private float rating_average;
     private int total;
 

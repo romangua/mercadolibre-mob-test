@@ -3,7 +3,6 @@ package com.rguarino.mercadolibre_test.adapter;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.rguarino.mercadolibre_test.R;
 import com.rguarino.mercadolibre_test.entity.Product;
 import com.rguarino.mercadolibre_test.interfaces.OnLoadMoreListener;
 import com.rguarino.mercadolibre_test.interfaces.OnViewListener;
-
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -27,7 +24,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private boolean isLoading;
-    private int visibleThreshold = 3;
+    private int visibleThreshold = 5;
     private int lastVisibleItem, totalItemCount;
 
     private OnViewListener mOnViewListener;
@@ -152,8 +149,6 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     mOnViewListener.viewOnClick(v, getAdapterPosition());
                 }
             });
-
-
         }
     }
 

@@ -10,12 +10,12 @@ android:background="#000000">
     android:layout_height="match_parent"/>
 
     <Button
+        android:id="@+id/btnClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cerrar"
         android:layout_alignParentRight="true"
         android:background="@drawable/button_image_view"
-        android:id="@+id/btnClose"
         android:textSize="13sp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"

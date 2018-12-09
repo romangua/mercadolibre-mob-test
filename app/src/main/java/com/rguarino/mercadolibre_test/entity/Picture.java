@@ -3,9 +3,8 @@ package com.rguarino.mercadolibre_test.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 public class Picture implements Parcelable {
+
     private String id;
     private String url;
 

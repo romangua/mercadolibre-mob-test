@@ -3,14 +3,8 @@ package com.rguarino.mercadolibre_test.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
-/**
- * Created by dev3 on 07/12/2018.
- */
-
 public class Installment implements Parcelable {
+
     private int quantity;
     private float amount;
     private float rate;
